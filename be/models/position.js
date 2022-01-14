@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Item = require('../models/item');
 
 const PositionSchema = new Schema({
     name: {
@@ -16,4 +17,13 @@ const PositionSchema = new Schema({
     }],
 })
 
-module.exports = mongoose.model('Position', BookSchema);
+PositionSchema.post('findOneAndDelete', async data => {
+    if(data){
+        await Item.deleteMany({
+            _id: {
+                $in: data.items
+            }
+        })
+    }
+})
+module.exports = mongoose.model('Position', PositionSchema);

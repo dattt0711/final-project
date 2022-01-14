@@ -4,12 +4,27 @@ const Schema = mongoose.Schema;
 const ItemSchema = new Schema({
     name: {
         type: String,
-        unique: true,
         required: true,
     },
-    positions: [{
+    position: {
         type: Schema.Types.ObjectId,
         ref: 'Position'
-    }],
+    },
+    task: {
+        type: String,
+    },
+    description: {
+        type: String,
+    },
+    price: {
+        type: Number,
+    },
+    expires: {
+        type: String,
+    },
+    home: {
+        type: Schema.Types.ObjectId,
+        ref: 'Home'
+    }
 })
-module.exports = mongoose.model('Item', BookSchema);
+module.exports = mongoose.model('Item', ItemSchema);

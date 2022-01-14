@@ -13,10 +13,14 @@ const HomeSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Position'
     }],
+    items: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Item'
+    }],
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment'
     }]
 })
 
-module.exports = mongoose.model('Home', BookSchema);
+module.exports = mongoose.model('Home', HomeSchema);
