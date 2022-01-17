@@ -4,6 +4,7 @@ const Position = require('../models/position');
 const Item = require('../models/item');
 const Home = require('../models/home');
 const moment = require('moment');
+const mongoose = require('mongoose');
 
 router.post('/home/item', async(req,res)=>{
     try{
@@ -45,10 +46,12 @@ router.put('/home/item', async(req,res) =>{
     }
 })
 
-router.get('/home/item', async(req, res)=>{
+router.get('/home/item',async(req, res)=>{
     try{
-        const {home} = req.body;
-        const items = await Item.find({home});
+        console.log(req.userID);
+        console.log(req.home)
+        const {home} = req.query;
+        const items = await Item.find({home})
         res.json(items)
     }catch(err){
         console.log("error get all items "+err.message);
