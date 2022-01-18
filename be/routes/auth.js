@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
         },
             process.env.ACCESS_TOKEN_SECRET
         )
-        return res.json({success: true, message: 'User created successfully', accessToken})
+        return res.json({success: true, message: 'User created successfully', accessToken, home: newHome._id})
     }catch(err){
         console.log(error)
         res.status(500).json({success: false, message: "Internal server error"})
@@ -55,7 +55,7 @@ router.post('/login', async(req,res)=>{
     try{
         // Check for existing user
         const user = await User.findOne({username});
-        const home = await Home.find({user:user.home});
+        const home = await Home.findOne({user:user._id});
         if(!user) 
         return res.status(400).json({success: false, message: "Incorrect username or password"})
 
@@ -65,11 +65,11 @@ router.post('/login', async(req,res)=>{
         // Return token
         const accessToken = jwt.sign({
             userID: user._id,
-            home: home
+            home: home._id
         },
             process.env.ACCESS_TOKEN_SECRET
         )
-        return res.json({success: true, message: 'Login successfully', accessToken})
+        return res.json({success: true, message: 'Login successfully', accessToken, home: home._id})
     }catch(err){
         console.log("err",err)
         res.status(500).json({success: false, message: "Internal server error"})
