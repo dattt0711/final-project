@@ -25,6 +25,10 @@ const ItemSchema = new Schema({
     home: {
         type: Schema.Types.ObjectId,
         ref: 'Home'
+    },
+    image: {
+        url: String,
+        filename: String
     }
 })
 module.exports = mongoose.model('Item', ItemSchema);

@@ -5,11 +5,15 @@ const Item = require('../models/item');
 const Home = require('../models/home');
 const moment = require('moment');
 const mongoose = require('mongoose');
-
-router.post('/home/item', async(req,res)=>{
+const multer = require('multer')
+const {storage} = require('../cloudinary')
+const upload = multer({storage})
+router.post('/home/item', upload.single('image'), async(req,res)=>{
     try{
+        console.log(req.body)
         const {position, name, task, description, price, expires, home} = req.body;
         const newItem = new Item({position, name, task, description, price, expires, home});
+        newItem.image = {url: req.file.path, filename: req.file.filename};
         const findPos = await Position.findById(position);
         const findHome = await Home.findById(home);
         findPos.items.push(newItem);
@@ -48,8 +52,6 @@ router.put('/home/item', async(req,res) =>{
 
 router.get('/home/item',async(req, res)=>{
     try{
-        console.log(req.userID);
-        console.log(req.home)
         const {home} = req.query;
         const items = await Item.find({home})
         res.json(items)
@@ -58,9 +60,19 @@ router.get('/home/item',async(req, res)=>{
     }
 })
 
+router.get('/home/item/:id', async(req,res)=>{
+    try{
+        const {id} = req.params;
+        const item = await Item.findById(id);
+        console.log(item)
+        res.json(item);
+    }catch(err){
+        console.log("error get item by id "+err.message);
+    }
+})
+
 router.delete('/home/item', async(req, res)=>{
     try{
-        const {item_id} = req.body;
         const deletedItem = await Item.findById(item_id);
         const position = deletedItem.position;
         const home = deletedItem.home;
@@ -70,6 +82,14 @@ router.delete('/home/item', async(req, res)=>{
         res.json(deletedItem)
     }catch(err){
         console.log("error delete item "+err.message);
+    }
+})
+
+router.post('/test/image', upload.single('image'), async(req,res) => {
+    try{
+        res.send({url: req.file.path, filename: req.file.filename});
+    }catch(err){
+        console.log("error upload image", err.message)
     }
 })
 module.exports = router

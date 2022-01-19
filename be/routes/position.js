@@ -20,8 +20,8 @@ router.post('/home/position', async(req,res)=>{
 
 router.get('/home/position', async(req,res)=>{
     try{
-        const {home} = req.body;
-        const positions = await Home.findById(home);
+        const {home} = req.query;
+        const positions = await Position.find({home});
         res.json(positions);
     }catch(err){
         console.log("error get position ", err.message);
