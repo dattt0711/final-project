@@ -13,4 +13,12 @@ router.post('/home', async(req,res)=>{
     }
 })
 
+router.get('/home', async(req,res)=>{
+    try{
+        const homes = await Home.find({}).populate('user');
+        res.json(homes);
+    }catch(err){
+        console.log("error get all house ", err.message)
+    }
+})
 module.exports = router
