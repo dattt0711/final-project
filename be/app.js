@@ -17,6 +17,7 @@ const homeRoute = require('./routes/home');
 const positionRoute = require('./routes/position');
 const itemRoute = require('./routes/item');
 const authRoute = require('./routes/auth');
+const commentRoute = require('./routes/comment')
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,6 +28,7 @@ app.use('/', homeRoute);
 app.use('/', positionRoute);
 app.use('/', itemRoute);
 app.use('/', authRoute);
+app.use('/', commentRoute);
 app.listen(3003, ()=>{
     console.log('listen on port 3003')
 })

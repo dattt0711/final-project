@@ -65,11 +65,13 @@ router.post('/login', async(req,res)=>{
         // Return token
         const accessToken = jwt.sign({
             userID: user._id,
-            home: home._id
+            home: home._id,
+            user: user._id,
+            username: user.username
         },
             process.env.ACCESS_TOKEN_SECRET
         )
-        return res.json({success: true, message: 'Login successfully', accessToken, home: home._id})
+        return res.json({success: true, message: 'Login successfully', accessToken, home: home._id, user: user._id, username: user.username})
     }catch(err){
         console.log("err",err)
         res.status(500).json({success: false, message: "Internal server error"})

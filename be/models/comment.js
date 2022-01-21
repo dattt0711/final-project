@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
-    content: {
+    comment: {
         type: String,
     },
     home: {
@@ -12,7 +12,17 @@ const CommentSchema = new Schema({
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    reply: [
+        {
+            rep: {
+                type: String
+            },
+            username: {
+                type: String
+            }
+        }
+    ]
 })
 
 module.exports = mongoose.model('Comment', CommentSchema);
