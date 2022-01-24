@@ -12,6 +12,18 @@ router.get('/comment', async (req, res) => {
     }
 })
 
+router.post('/comment/react', async (req, res) => {
+    try{
+        const {id} = req.body;
+        const cmt = await Comment.findById(id);
+        cmt.isReact = !cmt.isReact;
+        await cmt.save();
+        res.json(cmt);
+    } catch(err) {
+        console.log("error react comment", err.message);
+    }
+})
+
 router.post('/comment', async(req,res)=>{
     try{
         const {comment, home, owner} = req.body;

@@ -22,7 +22,11 @@ const CommentSchema = new Schema({
                 type: String
             }
         }
-    ]
+    ],
+    isReact: {
+        type: Boolean,
+        default: false
+    }
 })
 
 module.exports = mongoose.model('Comment', CommentSchema);
