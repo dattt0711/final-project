@@ -26,6 +26,8 @@ router.post('/home/item', upload.single('image'), async(req,res)=>{
     }
 })
 
+
+
 router.put('/home/item',upload.single('image'), async(req,res) =>{
     try{
         const {position, name, task, description, price, expires, id} = req.body; 
