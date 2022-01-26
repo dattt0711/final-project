@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const mongoosePaginate = require('mongoose-paginate-v2');
 const ItemSchema = new Schema({
     name: {
         type: String,
@@ -31,4 +31,5 @@ const ItemSchema = new Schema({
         filename: String
     }
 })
+ItemSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Item', ItemSchema);

@@ -26,7 +26,22 @@ router.post('/home/item', upload.single('image'), async(req,res)=>{
     }
 })
 
-
+router.get('/home/items', async (req,res)=>{
+    const {page=1, home} = req.query;
+    const options = {
+        limit: 1,
+        page: page,
+        populate: 'position'
+      };
+    await Item.paginate({home: home}, options, function(error, result) {
+        if (error) {
+          console.error(error);
+        } else {
+          res.json(result)
+        }
+      })
+    // res.json("hello")
+})
 
 router.put('/home/item',upload.single('image'), async(req,res) =>{
     try{
